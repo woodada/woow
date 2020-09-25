@@ -6,7 +6,7 @@ woow是用go开发的高并发的代理服务，目前支持http https socks5代
 
 ## 使用
 
-编译
+1.编译
 ```
 go get gopkg.in/natefinch/lumberjack.v2
 go get github.com/woodada/ioutil
@@ -15,35 +15,26 @@ cd github.com/woodada/woow/cmd/woow
 go build -ldflags "-w -s" -o woow
 ```
 
-
-# 使用说明
-1.查看版本号
+2.查看版本号
 ```
-proxy -version
-proxy --version
-proxy --v
-proxy -v
+proxy -version or proxy --version or proxy --v or proxy -v
 ```
 
-2.生成ssl证书
+3.生成ssl证书
 ```
-proxy --gencert
-proxy -gencert
+proxy --gencert or proxy -gencert
 ```
 
-3.查看配置
+4.查看配置
 ```
-proxy --config
-proxy -config
-proxy --c
-proxy -c
+proxy --config or proxy -config or proxy --c or proxy -c
 
 导出默认配置
 proxy --config > xxx.ini
 ```
 
 默认配置如下
-```cassandraql
+```
 # woow config file
 
 [server]
@@ -75,7 +66,7 @@ woo=123456
 lucy=123456
 ```
 
-4.运行
+5.运行
 ```
 proxy xxx.ini
 ```
