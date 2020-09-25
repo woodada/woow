@@ -160,12 +160,13 @@ ssl_cert="./gencert.cert"
 
 [admin]
 # 内置管理页面监听地址
-listen_addr=:54321
+listen_addr=127.0.0.1:54321
 
 [tunnel]
 # 空闲时间 单位秒 
 timeout= 600
 
+# 鉴权配置 无任何配置代理将不需要鉴权
 [accounts]
 woo=123456
 lucy=123456
