@@ -1,10 +1,5 @@
-# 说明
-
-woow是用go开发的高并发的代理服务，目前支持http https socks5代理。
-并且只需要监听一个端口，可以自动识别并正确代理。
+高并发的代理服务，采用go语言开发，同时支持http/https/socks5。且只需要监听一个端口，可以自动识别并正确代理。
 取名woow因为看起来像一头猪。
-
-## 使用
 
 1.编译
 ```
@@ -20,7 +15,7 @@ go build -ldflags "-w -s" -o woow
 proxy -version or proxy --version or proxy --v or proxy -v
 ```
 
-3.生成ssl证书
+3.生成ssl证书自签发
 ```
 proxy --gencert or proxy -gencert
 ```
@@ -60,7 +55,8 @@ listen_addr=127.0.0.1:54321
 # 空闲时间 单位秒 
 timeout= 600
 
-# 鉴权配置 无任何配置代理将不需要鉴权
+# 鉴权配置 无任何账号配置即可免Auth代理
+# 已知在Mac下即使配置了代理的账号密码，但是实际浏览器请求也是不带鉴权的。将[accounts]下配置为空，即可关闭代理服务的鉴权。
 [accounts]
 woo=123456
 lucy=123456
@@ -71,7 +67,7 @@ lucy=123456
 proxy xxx.ini
 ```
 
-5.测试
+6.测试
 
 ```
 curl -k -v -x 'http://woo:123456@127.0.0.1:12345' https://www.baidu.com
@@ -88,7 +84,25 @@ http://127.0.0.1:54321//debug/pprof/
 http://127.0.0.1:54321/status
 ```
 
-## 其它
-已知在Mac下配置的代理auth信息将不生效，也就是说系统即使配置了代理的账号密码，但是实际浏览器请求不带鉴权。
-将[accounts]下配置为空，即可关闭鉴权。
+## 开发
+
+采用模块开发,在代码中Run一个Server即可，Server间独立，可以启动多个。
+
+```
+type Config struct {
+    Logger         smartnet.Logger // 日志对象 默认不打印日志
+    Accounts       *AccountStore   // 账号存储 线程安全 可运行用增删改账号信息
+    SSLEnabled     bool            // 启用https代理
+    SSLKey         string          // key 
+    SSLCert        string          // cert
+    PreReadTimeout time.Duration   // 第一批字节读取超时时间
+    TunnelTimeout  time.Duration   // 隧道空闲断开时间
+    KeepAlive      time.Duration   // TCP keep alive
+    ListenAddress  string          // 服务监听地址
+}
+
+s := woow.NewServer(cfg)
+s.Run()
+```
+
 
