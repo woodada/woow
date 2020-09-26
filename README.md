@@ -1,6 +1,8 @@
+### 说明
 高并发的代理服务，采用go语言开发，同时支持http/https/socks5。且只需要监听一个端口，可以自动识别并正确代理。
-取名woow因为看起来像一头猪。
+取名woow看起来像一头猪。
 
+### 使用
 1.编译
 ```
 go get gopkg.in/natefinch/lumberjack.v2
@@ -77,14 +79,14 @@ curl -k  --proxy-insecure -v -x 'https://woo:123456@127.0.0.1:12345' https://www
 只需要一个端口，同时支持http socks5 https 三种代理；
 使用https代理时加上--proxy-insecure选项，这是因为这是自己签发的证书。
 
-## 管理页面
+7.管理页面
 
 ```
 http://127.0.0.1:54321//debug/pprof/
 http://127.0.0.1:54321/status
 ```
 
-## 开发
+### 开发
 
 采用模块开发,在代码中Run一个Server即可，Server间独立，可以启动多个。
 
